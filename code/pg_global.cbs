@@ -1,0 +1,369 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' $Header: /fchoice/product/paging/code/pg_global.cbs 25    12/06/02 9:41a Styson $
+'
+' Product        :  Paging
+'
+' Name           :  pg_global.cbs
+'
+' Description    :  Provides code to allow the Paging GUI to be launched from a Clarify
+'                   application menu bar.
+'
+'                   Function code is provided for loading page monitor and request screens.
+'
+'                   initialize_app() - clarify has been loaded
+'
+' Author          : First Choice Software, Inc.
+'                   4412 Spicewood Springs Road, Suite 701
+'                   Austin, TX 78759
+'                   (512) 418-2905
+'
+' Platforms       : This version supports Clarify 5.0 and later
+'
+' Copyright (C)  1998 First Choice Software, Inc.
+' All Rights Reserved
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Option Explicit
+
+Declare Public Function get_sprintf(str_num As Long, locale As String, application As String, _
+                                    Optional arg1 As Variant, Optional arg2 As Variant, _
+                                    Optional arg3 As Variant, Optional arg4 As Variant, _
+                                    Optional arg5 As Variant, Optional arg6 As Variant) _
+                                    As String
+
+Global locale As String
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Get the locale for the user
+'
+' Copyright (C) 1998. First Choice Software. All Rights Reserved.
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub set_locale()
+  If Trim$(locale) <> "" Then Exit Sub
+  locale = Trim$(Environ("LC_STRING"))
+  If locale = "" Then
+     locale = Trim$(Environ("LC_ALL"))
+  End If
+  If locale = "" Then
+     locale = "EN_US"
+  End If
+End Sub
+
+Sub initialize_app()
+  Dim pc_menu As New AppMenu
+
+  ' Get the locale for the user
+  set_locale
+
+  '
+  ' Add Page Monitor and Request Items to Clear Support
+  '
+  pc_menu.MenuBarID = 1002
+  pc_menu.AddItem "Desktop", "Page Monitor", "OpenPageMonitor"
+  pc_menu.AddItem "Desktop", "Page Request", "OpenPageRequest"
+
+  ' Done
+  '
+  App.ShowDefaultMenu
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' OpenPageMonitor_Click()
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub OpenPageMonitor_Click()
+  Dim frmAlias As New Form
+  '
+  ' Launch page monitor form and send mandatory 20000 message.
+  '
+  frmAlias.Show 1990, cbFrontIfUp
+  frmAlias.notify 20000, "0|False"  'mandatory for proper initialization
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' OpenPageRequest_Click()
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub OpenPageRequest_Click()
+  Dim frmAlias As New Form
+  '
+  ' Launch page request form and send mandatory 20000 message.
+  '
+  frmAlias.Show 1991, cbFrontIfUp
+  frmAlias.notify 20000, "0|False"  'mandatory for proper initialization
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' page_request function
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function page_request(page_num As String, message   As String, req_time As String, _
+                      rec_emp  As Record, rec_focus As Record) As Integer
+  Dim strPager      As String             'pager to be contacted
+  Dim strObjidEmp   As String             'employee objid
+  Dim strObjidFocus As String             'case or subcase objid
+  Dim strTypeEmp    As String             'employee type
+  Dim strTypeFocus  As String             'focus type, case or subcase
+  Dim dummy         As String             'dummy variable
+  Dim save_bulk     As New BulkSave       'save area for new page_request record
+'  Dim act_entry_rec As New Record         'record area for new act_entry
+  Dim page_rec      As New Record         'record area for new page_request
+  Dim time_bomb_rec As New Record         'record area for new time_bomb
+  Dim t_bulk        As New BulkRetrieve   'retrieve area for com_template
+  Dim t_list        As List               'list of com_template records
+  Dim tmplte_rec1   As Record             'record area for com_template
+  Dim tmplte_rec2   As Record             'record area for com_template
+'  Dim user_rec      As Record             'record area for user
+'  Dim user_objid    As Long               'objid for user record
+'  Dim gbst_rec      As Record             'record area for user
+'  Dim gbst_objid    As Long               'objid for user record
+
+  page_rec.RecordType = "page_request"
+'  act_entry_rec.RecordType = "act_entry"
+  time_bomb_rec.RecordType = "time_bomb"
+
+  If IsMissing(rec_focus) Then            'set focus strings based on parameters
+      strTypeFocus = ""
+      strObjidFocus = "0"
+  Else
+      strTypeFocus = rec_focus.RecordType
+      strObjidFocus = trim$(rec_focus.GetField("objid"))
+  End If
+
+  strPager = trim$(page_num)              'initialize pager string
+  If IsMissing(rec_emp) Then              'set employee strings based on parameters
+      strTypeEmp = ""
+      strObjidEmp = "0"
+  Else
+      strTypeEmp = rec_emp.RecordType
+      strObjidEmp = trim$(rec_emp.GetField("objid"))
+      If IsMissing(page_num) or Len(page_num) < 2 Then
+        strPager = trim$(rec_emp.GetField("beeper"))
+      End If
+  End If
+
+  'get records to use for time_bomb relations
+  t_bulk.Clear
+  t_bulk.SimpleQuery 0, "com_tmplte"
+  t_bulk.AppendFilter 0, "title", cbEqual, "FCS Paging Request API Action"
+  t_bulk.SimpleQuery 1, "com_tmplte"
+  t_bulk.AppendFilter 1, "title", cbEqual, "FCS Paging Request API"
+  t_bulk.RetrieveRecords
+  Set t_list = t_bulk.GetRecordList(0)
+  If t_list.count > 0 Then                'event log com template
+    Set tmplte_rec1 = t_list.ItemByIndex(0)
+  End If
+  Set t_list = t_bulk.GetRecordList(1)
+  If t_list.count > 0 Then                'business rule com template
+    Set tmplte_rec2 = t_list.ItemByIndex(0)
+  End If
+
+  If Len(strPager) < 1 Then
+    page_request = -1
+    Exit Function
+  End If
+
+  Select Case strTypeFocus                'set to empty if invalid focus type
+    Case "case", "subcase", ""
+      dummy = ""
+    Case Else
+      page_request = -2
+      Exit Function
+  End Select
+
+  If Len(message) > 2048 Then
+    page_request = -3
+    Exit Function
+  End If
+
+  If t_list.count = 0 Then
+    page_request = -4
+    Exit Function
+  End If
+
+  page_rec.SetField "creation_time", App.CurrentDate
+  page_rec.SetField "request_time",  format(req_time, "ddddd h:nn:ss")
+  page_rec.SetField "type",          0
+  page_rec.SetField "device_num",    strPager
+  page_rec.SetField "message",       message
+  page_rec.SetField "is_closed",     0
+
+  save_bulk.InsertRecord page_rec
+  If strTypeFocus = "case" and CLng(strObjidFocus) > 0 Then
+    save_bulk.RelateRecordsToId page_rec, "case", CLng(strObjidFocus), "page_request2case"
+  End If
+  If strTypeFocus = "subcase" and CLng(strObjidFocus) > 0 Then
+    save_bulk.RelateRecordsToId page_rec, "subcase", CLng(strObjidFocus), "page_request2subcase"
+  End If
+  If strTypeEmp = "employee" and CLng(strObjidEmp) > 0 Then
+    save_bulk.RelateRecordsToId page_rec, "employee", CLng(strObjidEmp), "page_request2employee"
+  End If
+  save_bulk.Save
+
+  'create time_bomb record
+  time_bomb_rec.SetField "title",         "FCS Paging Page Request Init"
+  time_bomb_rec.SetField "escalate_time", format(req_time, "ddddd h:nn:ss")
+  time_bomb_rec.SetField "end_time",      "1/1/2000"
+  time_bomb_rec.SetField "focus_lowid",   page_rec.GetField("objid")
+  time_bomb_rec.SetField "focus_type",    3550
+  time_bomb_rec.SetField "time_period",   0
+  time_bomb_rec.SetField "flags",         165806082 ' (2530 * 65536) + 2
+  time_bomb_rec.SetField "left_repeat",   0
+  save_bulk.InsertRecord time_bomb_rec
+  save_bulk.RelateRecordsToId time_bomb_rec, "employee", app.EmployeeObjid, "cmit_creator2employee"
+  save_bulk.RelateRecordsToId time_bomb_rec, "com_tmplte", tmplte_rec1.GetField("objid"), "trckr_info2com_tmplte"
+  save_bulk.RelateRecordsToId time_bomb_rec, "com_tmplte", tmplte_rec2.GetField("objid"), "rule2com_tmplte"
+  save_bulk.Save
+
+'  'create act_entry record
+'  t_bulk.Clear
+'  t_bulk.SimpleQuery 0, "employee"        'get employee record and related user record
+'  t_bulk.AppendFilter 0, "objid", cbEqual, CLng(strObjidEmp)
+'  t_bulk.TraverseFromParent 1, "employee2user", 0
+'  t_bulk.RetrieveRecords
+'  Set t_list = t_bulk.GetRecordList(1)
+'  If t_list.count > 0 Then                'load user record
+'    Set user_rec = t_list.ItemByIndex(0)
+'    user_objid = user_rec.GetField("objid")
+'  End If
+'
+'  t_bulk.Clear
+'  t_bulk.SimpleQuery 0, "gbst_elm"                    'get gbst record
+'  t_bulk.AppendFilter 0, "rank", cbEqual, 90220
+'  t_bulk.RetrieveRecords
+'  Set t_list = t_bulk.GetRecordList(0)
+'  If t_list.count > 0 Then                            'load gbst_elm record
+'    Set gbst_rec = t_list.ItemByIndex(0)
+'    gbst_objid = gbst_rec.GetField("objid")
+'  End If
+'
+'  act_entry_rec.SetField "act_code",   90220
+'  act_entry_rec.SetField "entry_time", App.CurrentDate
+'  act_entry_rec.SetField "addnl_info", Left$(message,255)
+'  save_bulk.InsertRecord act_entry_rec
+'  If strTypeFocus = "case" and CLng(strObjidFocus) > 0 Then
+'    save_bulk.RelateRecordsToId act_entry_rec, "case", CLng(strObjidFocus), "act_entry2case"
+'  End If
+'  If strTypeFocus = "subcase" and CLng(strObjidFocus) > 0 Then
+'    save_bulk.RelateRecordsToId act_entry_rec, "subcase", CLng(strObjidFocus), "act_entry2subcase"
+'  End If
+'  If strTypeEmp = "employee" and CLng(strObjidEmp) > 0 Then
+'    save_bulk.RelateRecordsToId act_entry_rec, "employee", CLng(strObjidEmp), "act_entry2employee"
+'  End If
+'  save_bulk.RelateRecords act_entry_rec, page_rec, "act_entry2page_request"
+'  If user_objid > 0 Then
+'    save_bulk.RelateRecordsToId act_entry_rec, "user", user_objid, "act_entry2user"
+'  End If
+'  If gbst_objid > 0 Then
+'    save_bulk.RelateRecordsToId act_entry_rec, "gbst_elm", gbst_objid, "entry_name2gbst_elm"
+'  End If
+'  save_bulk.Save
+End Function
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' show_page_request_form function
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function show_page_request_form(rec_focus As Record, rec_emp As Record) As Integer
+  Dim strTypeFocus  As String             'focus type, case or subcase
+  Dim strObjidFocus As String             'case or subcase objid
+  Dim strTypeEmp    As String             'employee type
+  Dim strObjidEmp   As String             'employee objid
+  Dim strMessage    As String             'message to be sent
+  Dim frmAlias      As New Form           'form to be posted
+  Dim dummy         As String             'dummy variable
+
+  If IsMissing(rec_focus) Then            'set focus strings based on parameters
+      strTypeFocus = ""
+      strObjidFocus = "0"
+  Else
+      strTypeFocus = rec_focus.RecordType
+      strObjidFocus = trim$(rec_focus.GetField("objid"))
+  End If
+
+  If IsMissing(rec_emp) Then              'set employee strings based on parameters
+      strTypeEmp = ""
+      strObjidEmp = "0"
+  Else
+      strTypeEmp = rec_emp.RecordType
+      strObjidEmp = trim$(rec_emp.GetField("objid"))
+  End If
+
+  Select Case strTypeFocus                'error if invalid focus type
+    Case "case", "subcase", ""
+      dummy = ""
+    Case Else
+'     App.msgbox "Focus type is not valid"
+      App.MsgBox get_sprintf(11105, locale, "")
+      Exit Function
+  End Select
+
+  Select Case strTypeEmp                  'error if invalid employee type
+    Case "employee", ""
+      dummy = ""
+    Case Else
+'     App.msgbox "Employee type is not valid"
+      App.MsgBox get_sprintf(11106, locale, "")
+      Exit Function
+  End Select
+
+  strMessage = strTypeFocus & "|" & strObjidFocus & "|" & strObjidEmp 'build message string
+
+  frmAlias.Show 1991, cbFrontIfUp                'load page request form
+  frmAlias.Notify cbFirstMessage + 1, strMessage 'send message string
+  show_page_request_form = frmAlias.key          'return form instance
+End Function
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' show_page_monitor_form function
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function show_page_monitor_form(rec_focus As Record, rec_emp     As Record,  _
+                                max_age   As Long,   show_closed As Boolean) As Integer
+  Dim strTypeFocus  As String             'focus type, case or subcase
+  Dim strObjidFocus As String             'case or subcase objid
+  Dim strTypeEmp    As String             'employee type
+  Dim strObjidEmp   As String             'employee objid
+  Dim strMessage    As String             'message to be sent
+  Dim strMaxAge     As String             'maximum page age to be shown
+  Dim strShowClosed As String             'toggle for showinf closed pages
+  Dim frmAlias      As New Form           'form to be posted
+  Dim dummy         As String             'dummy variable
+
+  If IsMissing(rec_focus) Then            'set focus strings based on parameters
+      strTypeFocus = ""
+      strObjidFocus = "0"
+  Else
+      strTypeFocus = rec_focus.RecordType
+      strObjidFocus = trim$(rec_focus.GetField("objid"))
+  End If
+
+  If IsMissing(rec_emp) Then              'set employee strings based on parameters
+      strTypeEmp = ""
+      strObjidEmp = "0"
+  Else
+      strTypeEmp = rec_emp.RecordType
+      strObjidEmp = trim$(rec_emp.GetField("objid"))
+  End If
+
+  strMaxAge = trim$(str$(max_age))        'convert max_age to string
+  strShowClosed = trim$(str$(show_closed))'convert show_closed to string
+
+  Select Case strTypeFocus                'error if invalid focus type
+    Case "case", "subcase", ""
+      dummy = ""
+    Case Else
+'     App.msgbox "Focus type is not valid"
+      App.MsgBox get_sprintf(11105, locale, "")
+      Exit Function
+  End Select
+
+  Select Case strTypeEmp                  'error if invalid employee type
+    Case "employee", ""
+      dummy = ""
+    Case Else
+'     App.msgbox "Employee type is not valid"
+      App.MsgBox get_sprintf(11106, locale, "")
+      Exit Function
+  End Select
+
+  strMessage = strTypeFocus & "|" & strObjidFocus & "|" & strObjidEmp & "|" & _
+               strMaxAge & "|" & strShowClosed   'build message string
+
+  frmAlias.Show 1990, cbFrontIfUp                'load page monitor form
+  frmAlias.Notify cbFirstMessage + 1, strMessage 'send message string
+  show_page_monitor_form = frmAlias.key          'return form instance
+End Function

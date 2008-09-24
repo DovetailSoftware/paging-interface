@@ -1,0 +1,535 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Product        :  Paging Page Request Form Code
+'
+' Name           :  pg1991.cbs
+'
+' Description    :  Provides code for the Paging Page Request GUI
+'
+'                   Form can be loaded from menu event or from show_page_request_form API
+'
+' Author         :  First Choice Software, Inc.
+'                   8900 Business Park Drive
+'                   Austin, TX 78759
+'                   (512) 418-2905
+'
+' Platforms      :  This version supports Clarify 5.0 and later
+'
+' Copyright (C) 2001 First Choice Software, Inc. All Rights Reserved
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+OPTION EXPLICIT
+                                        'public function for creating page_request record
+Declare Public Function page_request(page_num As String, message   As String, req_time As String, _
+                                     rec_emp  As Record, rec_focus As Record) As Integer
+
+Declare Public Sub get_strings(start_val As Long, _
+                               num_strings As Integer, _
+                               locale As String, _
+                               application As String, _
+                               ret_strings As List)
+
+Declare Public Function get_sprintf(str_num As Long, locale As String, application As String, _
+                                    Optional arg1 As Variant, Optional arg2 As Variant, _
+                                    Optional arg3 As Variant, Optional arg4 As Variant, _
+                                    Optional arg5 As Variant, Optional arg6 As Variant) _
+                                    As String
+
+Global locale        As String
+Dim pass_emp_objid   As Long            'parameters that are filled when called from API
+Dim pass_focus_type  As String
+Dim pass_focus_objid As Long
+Dim ci_warn40        As Boolean
+Dim ci_warn80        As Boolean
+Dim ci_warn120       As Boolean
+Dim ci_warn240       As Boolean
+
+Sub btn_emp_more_Click()                'show employee detail information
+  Dim bulk_rt As New BulkRetrieve       'retrieve area for employee record
+  Dim rt_list As List                   'list for employee records
+  Dim eu_list As List                   'list for empl_user records
+  Dim eu_rec  As Record                 'record for empl_user
+  Dim emp_id  As Long                   'employee objid
+  Dim emp_rec As Record                 'record for employee
+
+  btn_send.Enabled = True
+
+  Set emp_rec = cobj_empl_record.Contents
+  emp_id = emp_rec.GetField("objid")
+
+  If emp_id > 0 Then
+    bulk_rt.SimpleQuery 0, "empl_user"
+    bulk_rt.AppendFilter 0, "employee", cbEqual, emp_id
+    bulk_rt.RetrieveRecords
+
+    Set eu_list = bulk_rt.GetRecordList(0)
+    If eu_list.count > 0 Then
+      Set eu_rec = eu_list.ItemByIndex(0)
+      App.ShowEmployee eu_rec, cbShowEmployeeReadOnly
+    End If
+  Else
+    btn_emp_more.Enabled = False
+  End If
+End Sub
+
+Sub btn_emp_lookup_Click()              'show employee selection form
+  btn_send.Enabled = True
+
+  dim emp_rec as new record
+  set emp_rec.recordType = "empl_user"
+  If Len(txt_first.text) > 0 Then
+    emp_rec.SetField "first_name", txt_first.text & "%"
+  End If
+  If Len(txt_last.text) > 0 Then
+    emp_rec.SetField "last_name", txt_last.text & "%"
+  End If
+  app.showselect cbSelEmployee, btn_emp_lookup, emp_rec
+End Sub
+
+'read desired employee record and load employee form controls
+Sub btn_emp_lookup_useSelect(emp_list as list, how as integer)
+  Dim emp_rec As Record
+  Dim bulk_rt As New BulkRetrieve
+  Dim rt_list As List
+
+  set emp_rec = emp_list.itemByIndex(0)
+  txt_first.text = emp_rec.GetField("first_name")
+  txt_last.text  = emp_rec.GetField("last_name")
+  txt_last.tag   = CStr(emp_rec.GetField("employee"))
+  If Len(txt_last.tag) > 0 Then
+    bulk_rt.SimpleQuery 0, "employee"
+    bulk_rt.AppendFilter 0, "objid", cbEqual, CLng(txt_last.tag)
+    bulk_rt.RetrieveRecords
+    Set rt_list = bulk_rt.GetRecordList(0)
+    If rt_list.count > 0 Then
+      Set emp_rec = rt_list.ItemByIndex(0)
+      cobj_empl_record.fill emp_rec
+      txt_pager.text = emp_rec.GetField("beeper")
+      btn_emp_more.Enabled = True
+    End If
+  End If
+End Sub
+
+Sub btn_req_time_Click()                'get desired delivery time
+  Dim date_dlg As New CommonDialog
+  Dim curr_time As Date
+  curr_time = App.CurrentDate
+
+  date_dlg.DateTime = CStr(txt_req_time.Text)
+  date_dlg.Action = cbCDDateTime
+
+  ' If the specified date/time is in the past, don't continue.
+  If CDate(date_dlg.DateTime) < curr_time Then
+    App.MsgBox get_sprintf(11100, locale, "")
+    Exit Sub
+  End If
+  txt_req_time.text = CDate(date_dlg.DateTime)
+  btn_send.Enabled = True
+End Sub
+
+Sub txt_case_id_LostFocus()             'get case/subcase title from database
+  Dim bulk_rt As New BulkRetrieve       'retrieve area for case/subcase record
+  Dim rt_list As List                   'list for case/subcase records
+  Dim pn_list As New List               'list for prop_name records
+  Dim mycase  As Record                 'record for case/subcase
+  Dim pn_rec  As Record                 'record for prop_name
+  Dim loopv   As Integer                'loop index
+
+  pn_list.ItemType = "string"
+  cobj_ddl_auto_text.Fill pn_list
+
+  txt_case_title.text = ""
+  If Len(txt_case_id.text) > 0 Then     'read subcase or case and load title control text
+    If InStr(txt_case_id.text,"-") Then
+      bulk_rt.SimpleQuery 0, "subcase"
+      bulk_rt.AppendFilter 0, "id_number", cbEqual, txt_case_id.text
+      bulk_rt.SimpleQuery 1, "prop_name"
+'     bulk_rt.AppendFilter 1, "path_name", cbLike, "sub%"
+      bulk_rt.AppendFilter 1, "obj_type", cbEqual, 24
+      bulk_rt.RetrieveRecords
+      Set rt_list = bulk_rt.GetRecordList(0)
+      If rt_list.count > 0 Then
+        Set mycase = rt_list.ItemByIndex(0)
+        txt_case_title.text = "Subcase: " & mycase.GetField("title")
+
+        Set rt_list = bulk_rt.GetRecordList(1)
+        If rt_list.count > 0 Then
+          For loopv = 0 to rt_list.count - 1
+            Set pn_rec = rt_list.ItemByIndex(loopv)
+            pn_list.AppendItem Cstr(pn_rec.GetField("prop_name"))
+          Next loopv
+          pn_list.Sort
+          cobj_ddl_auto_text.Fill pn_list
+        End If
+        Exit Sub
+      End If
+    End If
+    bulk_rt.SimpleQuery 0, "case"
+    bulk_rt.AppendFilter 0, "id_number", cbEqual, txt_case_id.text
+    bulk_rt.SimpleQuery 1, "prop_name"
+'   bulk_rt.AppendFilter 1, "path_name", cbLike, "case%"
+    bulk_rt.AppendFilter 1, "obj_type", cbEqual, 0
+    bulk_rt.RetrieveRecords
+    Set rt_list = bulk_rt.GetRecordList(0)
+    If rt_list.count > 0 Then
+      Set mycase = rt_list.ItemByIndex(0)
+      txt_case_title.text = mycase.GetField("title")
+      Set rt_list = bulk_rt.GetRecordList(1)
+      If rt_list.count > 0 Then
+        For loopv = 0 to rt_list.count - 1
+          Set pn_rec = rt_list.ItemByIndex(loopv)
+          pn_list.AppendItem Cstr(pn_rec.GetField("prop_name"))
+        Next loopv
+        pn_list.Sort
+        cobj_ddl_auto_text.Fill pn_list
+      End If
+    End If
+  End If
+End Sub
+
+Sub btn_load_case_Click()               'read case/subcase and load title control text
+  txt_case_id_LostFocus
+End Sub
+
+Sub txt_case_id_KeyPress(kp as integer) 'activate send button when data is entered
+  btn_send.Enabled = True
+End Sub
+Sub txt_case_title_KeyPress(kp as integer)
+  btn_send.Enabled = True
+End Sub
+Sub txt_first_KeyPress(kp as integer)
+  btn_send.Enabled = True
+  txt_last.tag = ""
+End Sub
+Sub txt_last_KeyPress(kp as integer)
+  btn_send.Enabled = True
+  txt_last.tag = ""
+End Sub
+Sub txt_pager_KeyPress(kp as integer)
+  btn_send.Enabled = True
+End Sub
+Sub txt_alt_pager_KeyPress(kp as integer)
+  btn_send.Enabled = True
+End Sub
+Sub txt_req_time_KeyPress(kp as integer)
+  btn_send.Enabled = True
+End Sub
+
+Sub txt_message_KeyPress(kp as integer) 'check message length and give warning messages
+  Dim msg_len As Integer
+  btn_send.Enabled = True
+  msg_len = Len(txt_message.text)
+  If msg_len > 40 and ci_warn40 Then
+    App.MsgBox get_sprintf(11101, locale, "", 40)
+    ci_warn40 = False
+  End If
+  If msg_len > 80 and ci_warn80 Then
+    App.MsgBox get_sprintf(11101, locale, "", 80)
+    ci_warn80 = False
+  End If
+  If msg_len > 120 and ci_warn120 Then
+    App.MsgBox get_sprintf(11101, locale, "", 120)
+    ci_warn120 = False
+  End If
+  If msg_len > 240 and ci_warn240 Then
+    App.MsgBox get_sprintf(11101, locale, "", 240)
+    ci_warn240 = False
+  End If
+End Sub
+
+Sub ddl_auto_text_Click()               'add desired text from focus object
+  Dim bulk_rt   As New BulkRetrieve     'retrieve area for records
+  Dim loopv     As Integer              'loop var
+  Dim mycase    As Record               'related record
+  Dim my_rec    As Record               'related record
+  Dim mysubcase As Record               'related record
+  Dim pn_rec    As Record               'prop_name record
+  Dim pn_str    As String               'prop_name path_name string
+  Dim pos1      As Integer              'parse var
+  Dim pos2      As Integer              'parse var
+  Dim obj_type  As String               'object type
+  Dim rel_str   As String               'relation string
+  Dim rt_list   As List                 'retrieve list record
+  Dim trav_cnt  As Integer              'traverse counter
+
+  If Len(txt_case_id.text) = 0 Then     'if no focus object, exit
+    Exit Sub
+  End If
+
+  bulk_rt.SimpleQuery 0, "prop_name"    'get relation from prop_name table for item
+  bulk_rt.AppendFilter 0, "prop_name", cbEqual, cobj_ddl_auto_text_dest.contents
+  bulk_rt.RetrieveRecords
+  Set rt_list = bulk_rt.GetRecordList(0)
+  For loopv = 0 to rt_list.count - 1
+    Set pn_rec = rt_list.ItemByIndex(loopv)
+    If InStr(txt_case_id.text,"-") Then
+'     If Cstr(pn_rec.GetField("path_name")) Like "sub*" Then  'if subcase, set field & type
+      If Cstr(pn_rec.GetField("obj_type")) = 24 Then          'if subcase, set field & type
+        obj_type = "subcase"
+        pn_str = pn_rec.GetField("path_name")
+      End If
+    Else
+'     If Cstr(pn_rec.GetField("path_name")) Like "case*" Then 'if case, set field & type
+      If Cstr(pn_rec.GetField("obj_type")) = 0 Then           'if case, set field & type
+        obj_type = "case"
+        pn_str = pn_rec.GetField("path_name")
+      End If
+    End If
+  Next loopv
+  If pn_str = "" Then
+    Exit Sub
+  End If
+  rt_list.Clear
+
+  trav_cnt = 0                          'build bulkretrieve while parsing path_name by :'s
+  bulk_rt.SimpleQuery 0, obj_type
+  bulk_rt.AppendFilter 0, "id_number", cbEqual, txt_case_id.text
+  While InStr(pn_str,":") > 0
+    trav_cnt = trav_cnt + 1
+    pos1 = InStr(pn_str,":")
+    rel_str = Mid$(pn_str,1,pos1-1)
+    pn_str  = Mid$(pn_str,pos1+1)
+    bulk_rt.TraverseFromParent trav_cnt, rel_str, trav_cnt - 1
+  Wend
+  bulk_rt.RetrieveRecords
+  Set rt_list = bulk_rt.GetRecordList(trav_cnt)
+  If rt_list.count > 0 Then
+    Set my_rec = rt_list.ItemByIndex(0)
+    If Len(txt_message.text) > 0 Then
+      If Right$(txt_message.text,1) <> " " Then
+        txt_message.text = txt_message.text & " "
+      End If
+    End If
+    txt_message.text = txt_message.text & my_rec.GetField(pn_str)
+    txt_message.Refresh
+  End If
+End Sub
+
+Sub btn_send_Click()                    'send page. adding record to page_request table
+  Dim bulk_rt   As New BulkRetrieve     'retrieve area for records
+  Dim err_msg   As String               'message area
+  Dim mycase    As New Record           'related case record
+  Dim mysubcase As New Record           'related subcase record
+  Dim rt_list   As List                 'retrieve list record
+  Dim emp_rec   As New Record           'related employee record
+  Dim send_time As String               'requested send time
+
+  Dim message     As String
+  Dim pager_num   As String
+  Dim return_code As Integer
+  Dim dash_flag   As Integer
+
+  Set mycase.RecordType = "case"
+  Set emp_rec.RecordType = "employee"
+  Set mysubcase.RecordType = "subcase"
+
+  If Len(txt_pager.text) > 0 Then       'load pager number or alt pager number
+    pager_num = txt_pager.text
+  Else
+    If Len(txt_alt_pager.text) > 0 Then
+      pager_num = txt_alt_pager.text
+    Else
+      err_msg = err_msg & get_sprintf(11102, locale, "", 240) & CHR(13)
+    End If
+  End If
+
+  If Len(txt_message.text) > 0 Then
+    message = txt_message.text
+  Else
+    err_msg = err_msg & get_sprintf(11103, locale, "", 240) & CHR(13)
+  End If
+
+  'If an error was found, show error messages and exit without saving page
+  If Len(err_msg) > 0 Then
+    App.msgbox err_msg
+    Exit Sub
+  End If
+
+  'If an error was found, show error messages and exit without saving page
+  If Len(txt_req_time.text) > 0 and Not IsDate(txt_req_time.text) Then
+    App.MsgBox get_sprintf(11104, locale, "")
+    Exit Sub
+  End If
+
+  'If specified, overide the current time with the requested send date/time
+  If Len(txt_req_time.text) > 0 Then
+    send_time = format(txt_req_time.Text, "ddddd h:nn:ss")
+  Else
+    send_time = App.CurrentDate
+  End If
+
+  dash_flag = 0
+  If Len(txt_case_id.text) > 0 Then
+    'If case_id has a dash, check for a matching subcase
+    If InStr(txt_case_id.text,"-") Then
+      bulk_rt.SimpleQuery 0, "subcase"
+      bulk_rt.AppendFilter 0, "id_number", cbEqual, txt_case_id.text
+      bulk_rt.RetrieveRecords
+      Set rt_list = bulk_rt.GetRecordList(0)
+      If rt_list.count > 0 Then
+        Set mysubcase = rt_list.ItemByIndex(0)
+        dash_flag = 1
+      End If
+    End If
+    'If case_id had a dash and no matching subcase, or had no dash at all, check for case
+    If dash_flag = 0 Then
+      bulk_rt.SimpleQuery 0, "case"
+      bulk_rt.AppendFilter 0, "id_number", cbEqual, txt_case_id.text
+      bulk_rt.RetrieveRecords
+      Set rt_list = bulk_rt.GetRecordList(0)
+      If rt_list.count > 0 Then
+        Set mycase = rt_list.ItemByIndex(0)
+      End If
+    End If
+  End If
+
+  'If employee specified, relate page to employee record
+  If Len(txt_first.text) > 0 or Len(txt_last.text) > 0 Then
+    Set emp_rec = cobj_empl_record.Contents
+  End If
+
+  btn_send.Enabled = False
+
+  If InStr(txt_case_id.text,"-") Then
+    return_code = page_request(pager_num,message,send_time,emp_rec,mysubcase)
+  Else
+    return_code = page_request(pager_num,message,send_time,emp_rec,mycase)
+  End If
+End Sub
+
+Sub btn_done_Click()                    'close form
+  me.Close
+End Sub
+
+Sub load_config_items()
+  Dim bulk_rt   As New BulkRetrieve     'retrieve area for records
+  Dim rt_list   As List                 'retrieve list record
+  Dim ci_rec    As Record               'config item record
+  Dim loopvar   As Integer              'loop index
+
+  bulk_rt.SimpleQuery 0, "config_itm"
+  bulk_rt.AppendFilter 0, "name", cbLike, "pg_WARN%"
+  bulk_rt.RetrieveRecords
+  Set rt_list = bulk_rt.GetRecordList(0)
+  For loopvar = 0 to rt_list.count - 1
+    Set ci_rec = rt_list.ItemByIndex(loopvar)
+    If ci_rec.GetField("i_value") = 1 Then
+      Select Case ci_rec.GetField("name")
+        Case "pg_WARN40"
+          ci_warn40 = True
+        Case "pg_WARN80"
+          ci_warn80 = True
+        Case "pg_WARN120"
+          ci_warn120 = True
+        Case "pg_WARN240"
+          ci_warn240 = True
+      End Select
+    End If
+  Next loopvar
+End Sub
+
+Sub Form_Load()
+  Dim ret_strings As New List           'list for control strings
+
+  me.dodefault
+  btn_send.Enabled = False              'initialize button states
+  btn_emp_more.Enabled = False
+
+  pass_emp_objid   = 0                  'initialize parameters
+  pass_focus_objid = 0
+  pass_focus_type  = ""
+  load_config_items
+
+  cobj_ddl_auto_text.Fill ret_strings        'empty auto_text list
+
+  get_strings 11020, 7, locale, "", ret_strings
+  lbl_case.caption     = ret_strings.ItemByIndex(0)
+  lbl_name.caption     = ret_strings.ItemByIndex(1)
+  lbl_pager.caption    = ret_strings.ItemByIndex(2)
+  lbl_message.caption  = ret_strings.ItemByIndex(3)
+  lbl_req_time.caption = ret_strings.ItemByIndex(4)
+  btn_send.caption     = ret_strings.ItemByIndex(5)
+  btn_done.caption     = ret_strings.ItemByIndex(6)
+End Sub
+
+Sub load_emp_by_objid(emp_objid As Long)
+  Dim bulk_rt  As New BulkRetrieve      'retrieve area for employee record
+  Dim rt_list  As List                  'list for employee records
+  Dim emp_rec  As Record                'record for employee items
+
+  bulk_rt.SimpleQuery 0, "employee"     'use parameters to get employee record
+  bulk_rt.AppendFilter 0, "objid", cbEqual, emp_objid
+  bulk_rt.RetrieveRecords
+
+  Set rt_list = bulk_rt.GetRecordList(0)
+  If rt_list.count > 0 Then             'set filter controls to reflect passed information
+    Set emp_rec = rt_list.ItemByIndex(0)
+    cobj_empl_record.fill emp_rec
+    txt_first.text = emp_rec.GetField("first_name")
+    txt_last.text  = emp_rec.GetField("last_name")
+    txt_pager.text = emp_rec.GetField("beeper")
+  End If
+End Sub
+
+Sub load_case_by_objid(case_objid As Long)
+  Dim bulk_rt  As New BulkRetrieve      'retrieve area for case/subcase record
+  Dim rt_list  As List                  'list for case/subcase records
+  Dim case_rec  As Record               'record for case/subcase items
+
+  If pass_focus_type = "case" Then      'use parameters to get case/subcase record
+    bulk_rt.SimpleQuery 0, "case"
+  Else
+    bulk_rt.SimpleQuery 0, "subcase"
+  End If
+  bulk_rt.AppendFilter 0, "objid", cbEqual, case_objid
+  bulk_rt.RetrieveRecords
+
+  Set rt_list = bulk_rt.GetRecordList(0)
+  If rt_list.count > 0 Then             'set filter controls to reflect passed information
+    Set case_rec = rt_list.ItemByIndex(0)
+    txt_case_id.text = case_rec.GetField("id_number")
+    If pass_focus_type = "case" Then
+      txt_case_title.text  = case_rec.GetField("title")
+    Else
+      txt_case_title.text = "Subcase: " & case_rec.GetField("title")
+    End If
+  End If
+End Sub
+
+'If form is loaded through an API, then the parameters will be passed in the "info" string
+Sub Message(ByVal num As Long, ByVal info As String)
+  Dim pos1 As Integer                   'parsing variables
+  Dim pos2 As Integer
+  Dim len1 As Integer
+
+  Select Case num
+    Case cbCloseMessage
+      Me.Close
+    Case cbFirstMessage + 1
+      len1 = Len(info)
+      If len1 > 0 Then
+        pos1 = InStr(info, "|")                       'get case/subcase indicator
+        pass_focus_type = Mid(info,1,pos1 - 1)
+        pos1 = pos1 + 1
+
+        pos2 = InStr(pos1, info, "|")                 'get case/subcase objid
+        pass_focus_objid = CLng(Mid(info,pos1,pos2 - pos1))
+        pos2 = pos2 + 1
+
+                                                      'get employee objid
+        pass_emp_objid = CLng(Mid(info,pos2,(len1 + 1) - pos2))
+
+        If pass_focus_objid > 0 and InStr(pass_focus_type,"case") > 0 Then
+          load_case_by_objid(pass_focus_objid)        'set case/subcase filter controls
+          txt_case_id_LostFocus
+          btn_send.Enabled = True
+        End If
+
+        If pass_emp_objid > 0 Then
+          load_emp_by_objid(pass_emp_objid)           'set employee filter controls
+          btn_send.Enabled = True
+          btn_emp_more.Enabled = True
+        End If
+      End If
+    Case Else
+      Me.DoDefault
+  End Select
+End Sub

@@ -1,0 +1,589 @@
+OBJECT  TYPE="fc_string", NAME=fc_string_268435478
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11000;
+   string ="List pages for ...";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435478
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435479
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11000;
+   string ="FR List pages for ...";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435479
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435480
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11001;
+   string ="First/Last Name:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435480
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435481
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11001;
+   string ="FR First/Last Name:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435481
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435482
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11002;
+   string ="Pager:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435482
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435483
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11002;
+   string ="FR Pager:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435483
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435484
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11003;
+   string ="Start/End Date:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435484
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435485
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11003;
+   string ="FR Start/End Date:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435485
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435486
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11004;
+   string ="List";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435486
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435487
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11004;
+   string ="FR List";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435487
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435488
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11005;
+   string ="Responses for selected page ...";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435488
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435490
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11005;
+   string ="FR Responses for selected page ...";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435490
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435491
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11006;
+   string ="ID:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435491
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435492
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11006;
+   string ="FR ID:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435492
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435493
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11007;
+   string ="Case";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435493
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435494
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11007;
+   string ="FR Case";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435494
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435495
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11008;
+   string ="Subcase";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435495
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435496
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11008;
+   string ="FR Subcase";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435496
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435497
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11009;
+   string ="Close Page";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435497
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435498
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11009;
+   string ="FR Close Page";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435498
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435499
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11010;
+   string ="Done";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435499
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435500
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11010;
+   string ="FR Done";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435500
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435501
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11011;
+   string ="List Closed Pages";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435501
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435502
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11011;
+   string ="FR List Closed Pages";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435502
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435503
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11020;
+   string ="Case ID/Title:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435503
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435504
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11020;
+   string ="FR Case ID/Title:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435504
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435505
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11021;
+   string ="First/Last Name:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435505
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435506
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11021;
+   string ="FR First/Last Name:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435506
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435507
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11022;
+   string ="Pager/Alt. Pager:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435507
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435508
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11022;
+   string ="FR Pager/Alt. Pager:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435508
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435509
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11023;
+   string ="Message:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435509
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435510
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11023;
+   string ="FR Message:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435510
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435511
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11024;
+   string ="Send Time:";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435511
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435513
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11024;
+   string ="FR Send Time:";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435513
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435516
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11025;
+   string ="Send";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435516
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435517
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11025;
+   string ="FR Send";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435517
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435518
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11026;
+   string ="Done";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435518
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435519
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11026;
+   string ="FR Done";
+   locale ="FR_FR";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435519
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435520
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11100;
+   string ="Requested Date/Time has elapsed. Please respecify.";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435520
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435521
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11101;
+   string ="Warning...message length has exceeded lenth of '%1s' characters";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435521
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435522
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11102;
+   string ="Pager or Alt. Pager must be filled in.";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435522
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435523
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11103;
+   string ="Message must be filled in.";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435523
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435524
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11104;
+   string ="Date/time entered is not valid.";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435524
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435525
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11105;
+   string ="Focus type is not valid";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435525
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435526
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11106;
+   string ="Employee type is not valid";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435526
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435527
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11107;
+   string ="pg.ini line ignored: '%1s'";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435527
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435528
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11108;
+   string ="Parsing Error: '%1s'";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435528
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435529
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11109;
+   string ="config_itm ignored: '%1s'";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435529
+
+OBJECT  TYPE="fc_string", NAME=fc_string_268435530
+  UNIQUE_FIELD = id, locale, application
+  FIELDS
+   id=11110;
+   string ="Cannot open file: '%1s'";
+   locale ="EN_US";
+   application ="";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_string_268435530
+
+! End of fc_string objects (wrote 49)

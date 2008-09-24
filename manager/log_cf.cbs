@@ -1,0 +1,139 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' 
+' Product        :  Log CF Note to case or subcase
+'                                                                           
+' Name           :  log_cf.cbs                                           
+'                                                                           
+' Description    :  Allows a page_response of type CF to get logged 
+'                   to a case or subcase as a NOTE record
+'                                                                           
+' Author          : First Choice Software, Inc.                             
+'                   4412 Spicewood Springs Road, Suite 701                            
+'                   Austin, TX 78759                                       
+'                   (512) 418-2905                                          
+'                                                                           
+' Platforms       : This version supports Clarify 5.0 and later             
+'                                                                           
+' Copyright (C)  1999 First Choice Software, Inc.
+' All Rights Reserved
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+OPTION EXPLICIT                         
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Declare external functions
+'
+' Copyright (C) 1999. First Choice Software. All Rights Reserved.
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Declare Function log_object_note(case_id As String, action_type As String, _
+                                 notes As String, int_use As String, log_date As String, _
+                                 user_name As String, _
+                                 gen_time_bombs As Boolean, int_fld1 As String, _
+                                 int_val1 As Long, int_fld2 As String, int_val2 As Long, _
+                                 str_fld1 As String, str_val1 As String, _
+                                 str_fld2 As String, str_val2 As String, _
+                                 date_fld1 As String, date_val1 As String, _
+                                 log_objid As Long, obj_type As String) As Integer 
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Log a NOTE based on CF page_response
+'
+' Copyright (C) 1999. First Choice Software. All Rights Reserved.
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub log_cf(pr_objid as long)
+  Dim ae_rec      As New Record         'act_entry record area
+  Dim bulk_rt     As New BulkRetrieve   'retrieve area for page_requests
+  Dim bulk_sv     As BulkSave           'save area for page_requests
+  Dim case_rec    As Record             'case record area
+  Dim empl_rec    As Record             'employee record area
+  Dim err_file    As String             'file_name for log file
+  Dim log_objid   As Long               'notes objid
+  Dim pg_rec      As Record             'page_request record area
+  Dim pr_rec      As Record             'page_response record area
+  Dim rt_list     As List               'list of retrieved records
+  Dim ret_int     As Integer            'return value
+  Dim subcase_rec As Record             'subcase record area
+  Dim today       As Date               'today's date
+  
+  today = App.CurrentDate
+                                                        'file name for log_cf log
+  err_file = "c:\temp\log_cf_" & Format(today,"dd") & ".txt"     
+  Open err_file For Append As #4                        'Open error file and print log message
+  Print #4, "processed response " + CStr(pr_objid) + " at " + CStr(today)
+
+  bulk_rt.SimpleQuery  0, "page_response"               'get response record
+  bulk_rt.AppendFilter 0, "objid", cbEqual, pr_objid
+  bulk_rt.TraverseFromParent 1, "page_response2page_request", 0   'get related page_request
+  bulk_rt.TraverseFromParent 2, "page_request2case", 1            'get related case
+  bulk_rt.TraverseFromParent 3, "page_request2subcase", 1         'get related subcase
+  bulk_rt.TraverseFromParent 4, "page_request2employee", 1        'get related employee
+  bulk_rt.RetrieveRecords
+
+  Set rt_list = bulk_rt.GetRecordList(0)
+  If rt_list.count > 0 Then                   'if page_response was found,put in pr_rec
+    Set pr_rec = rt_list.ItemByIndex(0)
+    Print #4, "page_response record found"
+  Else
+    Print #4, "page_response record not found"
+    goto exit_sub
+  End If
+
+  If pr_rec.GetField("response_code") <> "CF" Then
+    Print #4, "not CF page_response"
+    goto exit_sub
+  End If
+
+  Set rt_list = bulk_rt.GetRecordList(1)
+  If rt_list.count > 0 Then                   'if page_request was found,put in pg_rec
+    Set pg_rec = rt_list.ItemByIndex(0)
+    Print #4, "page request record found"
+  Else
+    Print #4, "page request record not found"
+    goto exit_sub
+  End If
+
+  Set rt_list = bulk_rt.GetRecordList(2)
+  If rt_list.count > 0 Then                   'if case was found,put in case_rec
+    Set case_rec = rt_list.ItemByIndex(0)
+    ret_int = log_object_note(case_rec.GetField("id_number"), _
+                              "", _
+                              "Confirmation received:" & pr_rec.GetField("confirmation"), _
+                              "", _
+                              CStr(today), _
+                              "", _
+                              False, _
+                              "", 0, _
+                              "", 0, _
+                              "", "", _
+                              "", "", _
+                              "", "", _
+                              log_objid,"case")
+    Print #4, "case record found, log_note result was " & ret_int & " with log_objid " & log_objid
+  End If
+
+  Set rt_list = bulk_rt.GetRecordList(3)
+  If rt_list.count > 0 Then                   'if subcase was found,put in subcase_rec
+    Set subcase_rec = rt_list.ItemByIndex(0)
+    ret_int = log_object_note(subcase_rec.GetField("id_number"), _
+                              "", _
+                              "Confirmation received:" & pr_rec.GetField("confirmation"), _
+                              "", _
+                              CStr(today), _
+                              "", _
+                              False, _
+                              "", 0, _
+                              "", 0, _
+                              "", "", _
+                              "", "", _
+                              "", "", _
+                              log_objid,"subcase")
+    Print #4, "subcase record found, log_note result was " & ret_int & " with log_objid " & log_objid
+  End If
+
+  Set rt_list = bulk_rt.GetRecordList(4)
+  If rt_list.count > 0 Then                   'if employee was found,put in emp_rec
+    Set empl_rec = rt_list.ItemByIndex(0)
+    Print #4, "employee record found"
+  End If
+
+exit_sub:
+  Close #4
+End Sub

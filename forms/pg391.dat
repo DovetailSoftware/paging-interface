@@ -1,0 +1,1156 @@
+OBJECT  TYPE="window_db", NAME="WINDOW_DB_391_5.0_pg1.0"
+ UNIQUE_FIELD = id , ver_clarify, ver_customer, locale
+  FIELDS
+   title ="Activity Log";
+   id=391;
+   top_c=32;
+   bottom_c=328;
+   left_c=38;
+   right_c=662;
+   flags=2;
+   type=12;
+   form=1;
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   min_width=100;
+   min_height=50;
+   description ="Activity Log Form";
+   dimmable=0;
+   dialog_name ="actlogsl";
+   ver_clarify ="5.0";
+   ver_customer ="pg1.0";
+   base_flag ="";
+   preload ="";
+   dlg_time_stamp = DATE "01/21/2000 14:12:52";
+   factor_top=0;
+   factor_bottom=0;
+   factor_left=0;
+   factor_right=0;
+   ver_cl_srce ="";
+   dev=1;
+   locale=0;
+   banner_icon=-1;
+   banner_color=-1;
+   backcolor=-1;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME="WINDOW_DB_391_5.0_pg1.0"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_1"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=0;
+   id=1;
+   title ="List activity logs whose";
+   top_c=16;
+   bottom_c=32;
+   left_c=9;
+   right_c=172;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="";
+   vlink_fld=-1;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="DTS_2";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_1"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_2"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=0;
+   id=2;
+   title ="Items";
+   top_c=266;
+   bottom_c=282;
+   left_c=57;
+   right_c=96;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="";
+   vlink_fld=-1;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="DTS_24";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_2"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_3"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=7;
+   id=3;
+   title ="";
+   top_c=32;
+   bottom_c=52;
+   left_c=9;
+   right_c=201;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="SORT_BY";
+   vlink_fld=0;
+   vlink_dtype=516;
+   tlink_name ="";
+   tlink_fld=0;
+   tlink_dtype=0;
+   name ="SORT_BY_MBT";
+   intval1=0;
+   intval2=-1;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_3"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_4"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=7;
+   id=4;
+   title ="";
+   top_c=32;
+   bottom_c=52;
+   left_c=211;
+   right_c=403;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="WDCARD_SEL";
+   vlink_fld=0;
+   vlink_dtype=516;
+   tlink_name ="WDCARD_NAMES";
+   tlink_fld=0;
+   tlink_dtype=518;
+   name ="WILDCARD";
+   intval1=0;
+   intval2=-1;
+   intval3=-1;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_4"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_5"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=3;
+   id=5;
+   title ="";
+   top_c=32;
+   bottom_c=52;
+   left_c=412;
+   right_c=566;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="FILTER_BY";
+   vlink_fld=0;
+   vlink_dtype=516;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="FILTER_BY";
+   intval1=0;
+   intval2=-1;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="-10,0,0,0,400,0,0,0,0,1,2,1,34,MS Sans Serif";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_5"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_6"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=4;
+   id=6;
+   title ="D/T";
+   top_c=32;
+   bottom_c=52;
+   left_c=576;
+   right_c=605;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="";
+   vlink_fld=0;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="SET";
+   intval1=2;
+   intval2=1150;
+   intval3=1150;
+   intval4=1151;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_6"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_7"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=7;
+   id=7;
+   title ="";
+   top_c=64;
+   bottom_c=84;
+   left_c=403;
+   right_c=508;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="DESCENDING";
+   vlink_fld=0;
+   vlink_dtype=516;
+   tlink_name ="";
+   tlink_fld=0;
+   tlink_dtype=0;
+   name ="ASC_DESC";
+   intval1=0;
+   intval2=-1;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_7"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_8"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=4;
+   id=8;
+   title ="List";
+   top_c=64;
+   bottom_c=84;
+   left_c=518;
+   right_c=614;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="";
+   vlink_fld=-1;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="SELECT";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_8"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_9"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=13;
+   id=9;
+   title ="";
+   top_c=96;
+   bottom_c=256;
+   left_c=9;
+   right_c=614;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=4096;
+   vlink_name ="SELECT_LIST";
+   vlink_fld=0;
+   vlink_dtype=518;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="FIELD_ARRAY";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_9"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_10"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=4;
+   id=10;
+   title ="Open";
+   top_c=264;
+   bottom_c=284;
+   left_c=412;
+   right_c=508;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=2;
+   vlink_name ="";
+   vlink_fld=-1;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="OPEN";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_10"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_11"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=4;
+   id=11;
+   title ="Done";
+   top_c=264;
+   bottom_c=284;
+   left_c=518;
+   right_c=614;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="";
+   vlink_fld=-1;
+   vlink_dtype=-1;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="DONE";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_11"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_12"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=3;
+   id=12;
+   title ="";
+   top_c=264;
+   bottom_c=284;
+   left_c=9;
+   right_c=57;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=256;
+   vlink_name ="TOTAL_NUM";
+   vlink_fld=0;
+   vlink_dtype=512;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="NUMBER_FOUND";
+   intval1=0;
+   intval2=-1;
+   intval3=0;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="-10,0,0,0,400,0,0,0,0,1,2,1,34,MS Sans Serif";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_12"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_13"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=5;
+   id=13;
+   title ="Local Time";
+   top_c=66;
+   bottom_c=82;
+   left_c=211;
+   right_c=297;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="TIME_RAD";
+   vlink_fld=0;
+   vlink_dtype=512;
+   tlink_name ="";
+   tlink_fld=-1;
+   tlink_dtype=-1;
+   name ="LOCALTIME";
+   intval1=1;
+   intval2=0;
+   intval3=1;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_13"
+
+OBJECT  TYPE="control_db", NAME="CONTROL_DB_391_5.0_pg1.0_14"
+ UNIQUE_FIELD=id,name UNIQUE_RELATION=control2window_db
+  FIELDS
+   type=5;
+   id=14;
+   title ="Site Time";
+   top_c=66;
+   bottom_c=82;
+   left_c=307;
+   right_c=393;
+   from_side=0;
+   to_ctrl_id=0;
+   same_side=0;
+   justification=0;
+   flags=0;
+   vlink_name ="TIME_RAD";
+   vlink_fld=0;
+   vlink_dtype=512;
+   tlink_name ="";
+   tlink_fld=0;
+   tlink_dtype=-1;
+   name ="SITETIME";
+   intval1=1;
+   intval2=0;
+   intval3=1;
+   intval4=0;
+   value1 ="";
+   value2 ="";
+   win_id=391;
+   function_id=0;
+   description ="";
+   dimmable=0;
+   vlink_fld_name ="";
+   tlink_fld_name ="";
+   dev=1;
+   flags2=0;
+   backcolor=0;
+   forecolor=0;
+   font ="0,0,0,0,0,0,0,0,0,0,0,0,0,";
+   value3 ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=control2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CONTROL_DB_391_5.0_pg1.0_14"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_3_0"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=0;
+   value1 ="Activity";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=3;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_3" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_3_0"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_3_1"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=1;
+   value1 ="Create Date";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=3;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_3" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_3_1"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_3_2"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=2;
+   value1 ="User";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=3;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_3" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_3_2"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_3_3"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=3;
+   value1 ="Additional Information";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=3;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_3" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_3_3"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_4_0"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=0;
+   value1 ="Default";
+   value2 ="";
+   value3 ="";
+   intval1=1;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=4;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_4" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_4_0"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_7_0"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=0;
+   value1 ="Ascending";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=7;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_7" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_7_0"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_7_1"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=1;
+   value1 ="Descending";
+   value2 ="";
+   value3 ="";
+   intval1=0;
+   intval2=0;
+   intval3=0;
+   intval4=0;
+   ctl_id=7;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=-1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_7" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_7_1"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_9_0"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=0;
+   value1 ="ACTIVITY_LIST";
+   value2 ="Activity";
+   value3 ="act_name";
+   intval1=16777218;
+   intval2=516;
+   intval3=96;
+   intval4=10;
+   ctl_id=9;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=15;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_9" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_9_0"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_9_1"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=1;
+   value1 ="ACTIVITY_LIST";
+   value2 ="Create Date";
+   value3 ="entry_time";
+   intval1=16777217;
+   intval2=677;
+   intval3=108;
+   intval4=8;
+   ctl_id=9;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=16;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_9" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_9_1"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_9_2"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=2;
+   value1 ="ACTIVITY_LIST";
+   value2 ="User";
+   value3 ="login_name";
+   intval1=3;
+   intval2=516;
+   intval3=60;
+   intval4=8;
+   ctl_id=9;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=17;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_9" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_9_2"
+
+OBJECT  TYPE="value_item", NAME="VALUE_ITEM_391_5.0_pg1.0_9_3"
+ UNIQUE_FIELD = id , ctl_id UNIQUE_RELATION = item2window_db 
+  FIELDS
+   id=3;
+   value1 ="ACTIVITY_LIST";
+   value2 ="Additional Information";
+   value3 ="add_info";
+   intval1=2;
+   intval2=516;
+   intval3=324;
+   intval4=8;
+   ctl_id=9;
+   value4 ="";
+   intval5=0;
+   intval6=0;
+   intval7=0;
+   intval8=0;
+   intval9=0;
+   dev=1;
+   value5 ="";
+   intval10=0;
+   column_ctl_id=18;
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=item2window_db;
+   TO_NAME="CONTROL_DB_391_5.0_pg1.0_9" REL=value2control_db;
+  END_RELATIONS
+END_OBJECT  NAME="VALUE_ITEM_391_5.0_pg1.0_9_3"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_ACTIVITY_LIST"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="ACTIVITY_LIST";
+   type=37;
+   idx=0;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="ACTIVITY_LIST";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_ACTIVITY_LIST"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_SELECT_LIST"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="SELECT_LIST";
+   type=518;
+   idx=1;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="SELECT_LIST";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_SELECT_LIST"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_SORT_BY"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="SORT_BY";
+   type=516;
+   idx=2;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="SORT_BY";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_SORT_BY"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_FILTER_BY"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="FILTER_BY";
+   type=516;
+   idx=3;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="FILTER_BY";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_FILTER_BY"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_DESCENDING"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="DESCENDING";
+   type=516;
+   idx=4;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="DESCENDING";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_DESCENDING"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_WDCARD_SEL"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="WDCARD_SEL";
+   type=516;
+   idx=5;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="WDCARD_SEL";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_WDCARD_SEL"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_WDCARD_NAMES"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="WDCARD_NAMES";
+   type=518;
+   idx=6;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="WDCARD_NAMES";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_WDCARD_NAMES"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_TOTAL_NUM"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="TOTAL_NUM";
+   type=512;
+   idx=7;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="TOTAL_NUM";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_TOTAL_NUM"
+
+OBJECT  TYPE="ctx_obj_db", NAME="CTX_OBJ_DB_391_5.0_pg1.0_TIME_RAD"
+ UNIQUE_FIELD = title  UNIQUE_RELATION = ctx_obj2window_db 
+  FIELDS
+   title ="TIME_RAD";
+   type=512;
+   idx=8;
+   behavior=0;
+   str_size=0;
+   dev=1;
+   caption ="TIME_RAD";
+   subtype ="";
+  END_FIELDS
+  RELATIONS
+   TO_NAME="WINDOW_DB_391_5.0_pg1.0" REL=ctx_obj2window_db;
+  END_RELATIONS
+END_OBJECT  NAME="CTX_OBJ_DB_391_5.0_pg1.0_TIME_RAD"
+

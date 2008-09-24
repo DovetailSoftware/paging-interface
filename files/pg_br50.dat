@@ -1,0 +1,154 @@
+/******************************************************************************/
+/* Import File for Product Configuration                                      */
+/*                                                                            */
+/* Copyright (C) 1999 First Choice Software, Inc.        All Rights Reserved  */
+/******************************************************************************/
+OBJECT  TYPE="com_tmplte", NAME=com_tmplte_268435525
+ UNIQUE_FIELD=title,rule_set,type UNIQUE_RELATION=escal_act2com_tmplte
+  FIELDS
+   title ="FCS Paging Request API";
+   time_til_esc=0;
+   flags=0;
+   condition ="";
+   action ="";
+   rule_set ="PAGING";
+   description ="";
+   type=1;
+   time_type=0;
+   time_units=0;
+   repeat_num=0;
+   repeat_period=0;
+   urgency=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=com_tmplte_268435525
+
+OBJECT  TYPE="com_tmplte", NAME=com_tmplte_268435526
+ UNIQUE_FIELD=title,rule_set,type UNIQUE_RELATION=escal_act2com_tmplte
+  FIELDS
+   title ="FCS Paging Request API Action";
+   time_til_esc=0;
+   flags=528;
+   condition ="";
+   action ="pager_clerk -o [Page Request Objid]";
+   rule_set ="";
+   description ="";
+   type=3;
+   time_type=0;
+   time_units=0;
+   repeat_num=0;
+   repeat_period=0;
+   urgency=36;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435525 REL=escal_act2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=com_tmplte_268435526
+
+OBJECT  TYPE="com_tmplte", NAME=com_tmplte_268435517
+ UNIQUE_FIELD=title,rule_set,type UNIQUE_RELATION=escal_act2com_tmplte
+  FIELDS
+   title ="FCS Paging Response";
+   time_til_esc=0;
+   flags=0;
+   condition ="";
+   action ="";
+   rule_set ="PAGING";
+   description ="";
+   type=1;
+   time_type=0;
+   time_units=0;
+   repeat_num=0;
+   repeat_period=0;
+   urgency=0;
+   dev=1;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=com_tmplte_268435517
+
+OBJECT  TYPE="com_tmplte", NAME=com_tmplte_268435523
+ UNIQUE_FIELD=title,rule_set,type UNIQUE_RELATION=escal_act2com_tmplte
+  FIELDS
+   title ="FCS Paging Response Action";
+   time_til_esc=0;
+   flags=528;
+   condition ="";
+   action ="log_cf [Page Response Objid]";
+   rule_set ="";
+   description ="";
+   type=3;
+   time_type=0;
+   time_units=0;
+   repeat_num=0;
+   repeat_period=0;
+   urgency=36;
+   dev=1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435517 REL=escal_act2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=com_tmplte_268435523
+
+OBJECT  TYPE="rule_cond", NAME=rule_cond_268435537
+ UNIQUE_FIELD=operand1,type UNIQUE_RELATION=parentrule2com_tmplte
+  FIELDS
+   type=2;
+   operator=0;
+   operand1 ="USER2530";
+   op1_type=0;
+   operand2 ="";
+   op2_type=0;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435525 REL=parentrule2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=rule_cond_268435537
+
+OBJECT  TYPE="rule_cond", NAME=rule_cond_268435538
+ UNIQUE_FIELD=operand1,type UNIQUE_RELATION=parentrule2com_tmplte
+  FIELDS
+   type=1;
+   operator=0;
+   operand1 ="page_request";
+   op1_type=0;
+   operand2 ="";
+   op2_type=0;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435525 REL=parentrule2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=rule_cond_268435538
+
+OBJECT  TYPE="rule_cond", NAME=rule_cond_268435554
+ UNIQUE_FIELD=operand1,type UNIQUE_RELATION=parentrule2com_tmplte
+  FIELDS
+   type=2;
+   operator=0;
+   operand1 ="USER2532";
+   op1_type=0;
+   operand2 ="";
+   op2_type=0;
+   dev=1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435517 REL=parentrule2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=rule_cond_268435554
+
+OBJECT  TYPE="rule_cond", NAME=rule_cond_268435555
+ UNIQUE_FIELD=operand1,type UNIQUE_RELATION=parentrule2com_tmplte
+  FIELDS
+   type=1;
+   operator=0;
+   operand1 ="page_response";
+   op1_type=0;
+   operand2 ="";
+   op2_type=0;
+   dev=1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME=com_tmplte_268435517 REL=parentrule2com_tmplte;
+  END_RELATIONS
+END_OBJECT  NAME=rule_cond_268435555

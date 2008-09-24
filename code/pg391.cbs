@@ -1,0 +1,71 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' 
+' $Header: /fchoice/product/rpa/code/pg391.cbs 9     1/21/00 2:16p Styson $
+'                                                                          
+' Product        :  Paging Activity Log Form Code
+'                                                                           
+' Name           :  pg391.cbs                                           
+'                                                                           
+' Description    :  Allows page monitor form to be shown for page request activity entries
+'                  
+' Author          : First Choice Software, Inc.                             
+'                   4412 Spicewood Springs Road, Suite 701                            
+'                   Austin, TX 78759                                       
+'                   (512) 418-2905                                          
+'                                                                           
+' Platforms       : This version supports Clarify 5.0 and later             
+'                                                                           
+' Copyright (C)  1998 First Choice Software, Inc.                           
+' All Rights Reserved                                                       
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+OPTION EXPLICIT                         
+
+Declare Public Function show_page_monitor_form(rec_focus As Record, rec_emp     As Record,  _
+                                               max_age   As Long,   show_closed As Boolean) As Integer
+
+Sub Form_Load()
+  me.DoDefault
+End Sub
+
+Sub OPEN_Click()                        'overide open button for page request entries
+  Dim ae_rec    As Record
+  Dim bulk_rt   As New BulkRetrieve
+  Dim focus_rec As Record
+  Dim emp_rec   As Record
+  Dim pg_rec    As Record
+  Dim ret_val   As Integer
+  Dim rt_list   As List
+
+  If FIELD_ARRAY.GetSelected(ae_rec) Then
+    ret_val = 0
+  End If
+
+  If ae_rec.GetField("act_code") = 90220 Then
+    If ae_rec.RecordType = "subcase_al" then
+      bulk_rt.SimpleQuery 0, "subcase"
+    End If
+    If ae_rec.RecordType = "case_alst" then
+      bulk_rt.SimpleQuery 0, "case"
+    End If
+    bulk_rt.AppendFilter 0, "objid", cbEqual, ae_rec.GetField("parent_objid")
+    bulk_rt.SimpleQuery 1, "act_entry"
+    bulk_rt.AppendFilter 1, "objid", cbEqual, ae_rec.GetField("objid")
+    bulk_rt.TraverseFromParent 2, "act_entry2employee", 1
+    bulk_rt.TraverseFromParent 3, "act_entry2page_request", 1
+    bulk_rt.RetrieveRecords
+    Set rt_list = bulk_rt.GetRecordList(0)          'get subcase record if found
+    If rt_list.count > 0 Then
+      Set focus_rec = rt_list.ItemByIndex(0)
+    End If
+    Set rt_list = bulk_rt.GetRecordList(2)          'get employee record if found
+    If rt_list.count > 0 Then
+      Set emp_rec = rt_list.ItemByIndex(0)
+    End If
+    Set rt_list = bulk_rt.GetRecordList(3)          'get page record if found
+    If rt_list.count > 0 Then
+      Set pg_rec = rt_list.ItemByIndex(0)
+    End If
+    ret_val = show_page_monitor_form(focus_rec,emp_rec,-1990,True)
+  Else
+    me.DoDefault
+  End If
+End Sub

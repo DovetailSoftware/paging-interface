@@ -1,0 +1,5 @@
+C:\Clarify\ClfyCbex.60\code\pg1990.cbs -F 1990 pg1.0
+C:\Clarify\ClfyCbex.60\code\pg1991.cbs -F 1991 pg1.0
+C:\Clarify\ClfyCbex.60\code\pg391.cbs -F 391 pg1.0
+C:\Clarify\ClfyCbex.60\code\pg_global.cbs -G clarify -N global 'pg menu items
+C:\Clarify\ClfyCbex.60\code\string.cbs -G clarify -N string 'pg string items

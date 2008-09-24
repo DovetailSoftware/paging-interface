@@ -1,0 +1,2 @@
+NO_EXPORT OBJECT ALL;
+EXPORT OBJECT page_request, page_response, config_itm, case, subcase, employee, act_entry, time_bomb, gbst_elm;

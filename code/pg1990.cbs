@@ -1,0 +1,466 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Product        :  Paging Page Request Form Code
+'
+' Name           :  pg1990.cbs
+'
+' Description    :  Provides code for the Paging Page Monitor GUI
+'
+'                   Form can be loaded from menu event or from show_page_monitor_form API
+'
+' Author         :  First Choice Software, Inc.
+'                   8900 Business Park Drive
+'                   Austin, TX 78759
+'                   (512) 418-2905
+'
+' Platforms      :  This version supports Clarify 5.0 and later
+'
+' Copyright (C) 2001 First Choice Software, Inc.
+' All Rights Reserved
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+OPTION EXPLICIT
+
+Declare Public Sub get_strings(start_val As Long, _
+                               num_strings As Integer, _
+                               locale As String, _
+                               application As String, _
+                               ret_strings As List)
+
+Global locale        As String
+
+Dim pass_emp_objid   As Long            'parameters that are filled when called from API
+Dim pass_focus_type  As String
+Dim pass_focus_objid As Long
+Dim pass_max_age     As Long
+Dim pass_show_closed As Boolean
+
+Sub Form_Load()
+  Dim ret_strings As New List           'list for control strings
+
+  me.DoDefault
+  opt_case.value = 1                    'set default radio button
+  pass_emp_objid   = 0                  'initialize parameters
+  pass_focus_objid = 0
+  pass_focus_type  = ""
+  pass_max_age     = 0
+  pass_show_closed = False
+  btn_close_page.Enabled = False
+
+  get_strings 11000, 12, locale, "", ret_strings
+  lbl_header.caption     = ret_strings.ItemByIndex(0)
+  lbl_name.caption       = ret_strings.ItemByIndex(1)
+  lbl_pager.caption      = ret_strings.ItemByIndex(2)
+  lbl_date.caption       = ret_strings.ItemByIndex(3)
+  btn_list.caption       = ret_strings.ItemByIndex(4)
+  lbl_responses.caption  = ret_strings.ItemByIndex(5)
+  lbl_case_id.caption    = ret_strings.ItemByIndex(6)
+  opt_case.caption       = ret_strings.ItemByIndex(7)
+  opt_subcase.caption    = ret_strings.ItemByIndex(8)
+  btn_close_page.caption = ret_strings.ItemByIndex(9)
+  btn_done.caption       = ret_strings.ItemByIndex(10)
+  chk_closed.caption     = ret_strings.ItemByIndex(11)
+End Sub
+
+Sub btn_Done_Click()                    'close form
+  me.Close
+End Sub
+
+Sub btn_start_Click()                   'load date dialog box for indicating start date/time
+  Dim date_dlg As New CommonDialog
+
+  date_dlg.DateTime = CStr(txt_start_date.Text)
+  date_dlg.Action = cbCDDateTime
+  txt_start_date.text = CDate(date_dlg.DateTime)
+End Sub
+
+Sub btn_end_Click()                     'load date dialog box for indicating end date/time
+  Dim date_dlg As New CommonDialog
+
+  date_dlg.DateTime = CStr(txt_end_date.Text)
+  date_dlg.Action = cbCDDateTime
+  txt_end_date.text = CDate(date_dlg.DateTime)
+End Sub
+
+Sub btn_list_Click()
+  Dim edit_str      As String           'holds date/time string for declaring filters
+  Dim loopvar       As Integer          'loop variables
+  Dim loopvar2      As Integer
+  Dim my_ret        As New BulkRetrieve 'secondary retrieve area
+  Dim my_list       As List             'secondary record list
+  Dim myemp_rec     As Record           'secondary records
+  Dim mycase_rec    As Record
+  Dim mysubcase_rec As Record
+  Dim pri_list      As List             'holds list of primary employee/case/subcase records
+  Dim pri_rec       As Record           'holds primary employee/case/subcase record
+  Dim p_ret         As New BulkRetrieve 'primary retrieve area
+  Dim pg_view       As New Record       'view record for building page request information
+  Dim r_list        As New List         'list of view records
+  Dim rel_name      As String           'holds relation between primary and secondary objects
+  Dim sec_list      As List             'holds list of primary employee/case/subcase records
+  Dim sec_rec       As Record           'holds page record related to primary employee/case/subcase
+
+  pg_view.RecordType = "view_pages"     'set type for building view records
+  cobj_LOR_page_response.fill r_list    'initialize CLB to empty list
+
+  'if something has been specified, build queries based on specified parameters
+  '
+  ' Note: SQL Server had improper view query results, so the view records are filled
+  '       from the related page_request, employee, case/subcase records
+  '
+  If Len(txt_first.Text) > 0 or _
+     Len(txt_last.Text)  > 0 or _
+     Len(txt_case.Text)  > 0 Then
+'    Len(txt_pager.Text) > 0 or _
+
+      'employee records can be filtered for name and pager numbers
+      If Len(txt_first.Text) > 0 or _
+         Len(txt_last.Text)  > 0 or _
+         Len(txt_pager.Text) > 0 Then
+          p_ret.SimpleQuery 0, "employee"
+          If Len(txt_first.Text) > 0 Then             'first name filter
+            p_ret.AppendFilter 0, "first_name", cbLike, txt_first.Text & "%"
+          End If
+          If Len(txt_last.Text) > 0 Then             'last name filter
+            p_ret.AppendFilter 0, "last_name",  cbLike, txt_last.Text & "%"
+          End If
+'         If Len(txt_pager.Text) > 0 Then             'pager number filter
+'           p_ret.AppendFilter 0, "beeper", cbLike, txt_pager.Text & "%"
+'         End If
+          rel_name = "employee2page_request"
+      Else
+          'case/subcase records are filtered for id numbers
+          If Len(txt_case.Text) > 0 Then
+            If opt_case.value Then
+              p_ret.SimpleQuery 0, "case"             'case query
+              p_ret.AppendFilter 0, "id_number", cbEqual, txt_case.Text
+              rel_name = "case2page_request"
+            End If
+            If opt_subcase.value Then
+              p_ret.SimpleQuery 0, "subcase"          'subcase query
+              p_ret.AppendFilter 0, "id_number", cbEqual, txt_case.Text
+              rel_name = "subcase2page_request"
+            End If
+          End If
+      End If
+      'get pages related to specified employee/case/subcase
+      p_ret.TraverseFromParent 1, rel_name, 0
+      If Len(txt_start_date.Text) > 0 Then            'start date filter
+        edit_str = format(txt_start_date.Text, "ddddd h:nn:ss")
+        p_ret.AppendFilter 1, "request_time", cbGreaterOrEqual, edit_str
+      End If
+      If Len(txt_end_date.Text) > 0 Then              'end date filter
+        edit_str = format(txt_end_date.Text, "ddddd h:nn:ss")
+        p_ret.AppendFilter 1, "request_time", cbLessOrEqual, edit_str
+      End If
+      If chk_closed.Value = 0 Then                    'open/all filter
+        p_ret.AppendFilter 1, "is_closed", cbNotEqual, 1
+      End If
+      If Len(txt_pager.Text) > 0 Then             'pager number filter
+        p_ret.AppendFilter 1, "device_num", cbLike, txt_pager.Text & "%"
+      End If
+      p_ret.RetrieveRecords
+
+      'primary query has the employee/case/subcase records
+      'secondary query has the related page records
+      '
+      '   loop through all pages for each primary record
+      '
+      Set pri_list = p_ret.GetRecordList(0)
+      For loopvar = 0 to pri_list.count -1
+        Set pri_rec = pri_list.ItemByIndex(loopvar)
+        Set sec_list = p_ret.GetRelatedRecordList(pri_rec, rel_name)
+        For loopvar2 = 0 to sec_list.count -1
+          'fill pg_view with page_request fields
+          Set sec_rec = sec_list.ItemByIndex(loopvar2)
+          pg_view.CreateView "view_pages", sec_rec
+          Select case rel_name
+            case "employee2page_request"
+              pg_view.CreateView "view_pages", pri_rec
+
+              'Now Go Get related Case/Subcase Information
+              my_ret.SetRoot sec_rec
+              my_ret.TraverseFromRoot 0, "page_request2case"
+              my_ret.TraverseFromRoot 1, "page_request2subcase"
+              my_ret.RetrieveRecords
+              Set my_list = my_ret.GetRecordList(0)
+              If my_list.count > 0 Then
+                Set mycase_rec = my_list.ItemByIndex(0)
+                'fill view with case information
+                pg_view.SetField "case_objid",     mycase_rec.GetField("objid")
+                pg_view.SetField "case_id_number", mycase_rec.GetField("id_number")
+              End If
+              Set my_list = my_ret.GetRecordList(1)
+              If my_list.count > 0 Then
+                Set mysubcase_rec = my_list.ItemByIndex(0)
+                'fill view with subcase information
+                pg_view.SetField "subcase_objid",     mysubcase_rec.GetField("objid")
+                pg_view.SetField "subcase_id_number", mysubcase_rec.GetField("id_number")
+                pg_view.SetField "case_id_number",    mysubcase_rec.GetField("id_number")
+              End If
+
+            case "case2page_request"
+              'fill view with case information
+              pg_view.CreateView "view_pages", pri_rec
+
+              'Now Go Get Employee Information If This Page Has A Related Employee
+              my_ret.SetRoot sec_rec
+              my_ret.TraverseFromRoot 0, "page_request2employee"
+              my_ret.RetrieveRecords
+              Set my_list = my_ret.GetRecordList(0)
+              If my_list.count > 0 Then
+                Set myemp_rec = my_list.ItemByIndex(0)
+                'fill view with employee information
+                pg_view.SetField "emp_objid",      myemp_rec.GetField("objid")
+                pg_view.SetField "emp_first_name", myemp_rec.GetField("first_name")
+                pg_view.SetField "emp_last_name",  myemp_rec.GetField("last_name")
+              End If
+
+            case "subcase2page_request"
+              'fill view with subcase information
+              pg_view.CreateView "view_pages", pri_rec
+              'fill case_id field with subcase id number for shared case id column
+              pg_view.SetField "case_id_number", pri_rec.GetField("id_number")
+
+              'Now Go Get Employee Information If This Page Has A Related Employee
+              my_ret.SetRoot sec_rec
+              my_ret.TraverseFromRoot 0, "page_request2employee"
+              my_ret.RetrieveRecords
+              Set my_list = my_ret.GetRecordList(0)
+              If my_list.count > 0 Then
+                Set myemp_rec = my_list.ItemByIndex(0)
+                'fill view with employee information
+                pg_view.SetField "emp_objid",      myemp_rec.GetField("objid")
+                pg_view.SetField "emp_first_name", myemp_rec.GetField("first_name")
+                pg_view.SetField "emp_last_name",  myemp_rec.GetField("last_name")
+              End If
+          End Select
+          r_list.AppendItem pg_view                   'add view record to list of view records
+        Next loopvar2
+      Next loopvar
+      cobj_LOR_page_request.fill r_list               'fill clb with list of view records
+  Else
+    'No employee or case/subcase filter specifications have been made, so do simplequery
+    'directly againt view_pages, filtering for start/end time and open/all specs
+    p_ret.SimpleQuery 0, "view_pages"
+    If Len(txt_start_date.Text) > 0 Then              'Start time filter
+      edit_str = format(txt_start_date.Text, "ddddd h:nn:ss")
+      p_ret.AppendFilter 0, "page_req_time", cbGreaterOrEqual, edit_str
+    End If
+    If Len(txt_end_date.Text) > 0 Then                'End time filter
+      edit_str = format(txt_end_date.Text, "ddddd h:nn:ss")
+      p_ret.AppendFilter 0, "page_req_time", cbLessOrEqual, edit_str
+    End If
+    If chk_closed.Value = 0 Then                      'Include closed page filter
+      p_ret.AppendFilter 0, "page_is_closed", cbNotEqual, 1
+    End If
+    If Len(txt_pager.Text) > 0 Then             'pager number filter
+      p_ret.AppendFilter 0, "page_device_num", cbLike, txt_pager.Text & "%"
+    End If
+    p_ret.RetrieveRecords                             'Get view_pages records from database
+    Set pri_list = p_ret.GetRecordList(0)
+    For loopvar = 0 to pri_list.count -1              'Add each view_pages record to list
+      Set pri_rec = pri_list.ItemByIndex(loopvar)
+      'fill case_id field with subcase id number for shared case id column
+      If Len(pri_rec.GetField("subcase_id_number")) > 0 Then
+        pri_rec.SetField "case_id_number", pri_rec.GetField("subcase_id_number")
+        pri_list.ReplaceByIndex loopvar, pri_rec
+      End If
+    Next loopvar
+    cobj_LOR_page_request.fill pri_list               'Fill CLB with list of view_pages records
+  End If
+
+  CLB_Page_Request.UnSelect                           'Clear previous page selection if any
+  btn_close_page.Enabled = False
+End Sub
+
+Sub CLB_Page_Request_Click()            'As a page is selected, show responses and allow close/re-open
+  Dim pg_list  As List                  'list of selected page record
+  Dim pg_rec   As Record                'selected page record
+  Dim vw_rec   As Record                'view record for selected page
+  Dim bulk_rt  As New BulkRetrieve      'retrieve are for response records
+  Dim r_list   As List                  'list of related responses
+  Dim r_count  As Integer               'count of responses
+
+  Set r_list = cobj_LOR_page_response.contents        'get list of view records
+  r_count = r_list.count
+
+  If CLB_Page_Request.GetSelected(vw_rec) Then        'toggle caption of close/re-open button
+    bulk_rt.SimpleQuery 0, "page_request"
+    bulk_rt.AppendFilter 0, "objid", cbEqual, vw_rec.GetField("page_objid")
+    bulk_rt.TraverseFromParent 1, "page_request2page_response", 0
+    bulk_rt.RetrieveRecords
+    Set pg_list = bulk_rt.GetRecordList(0)
+    Set pg_rec = pg_list.ItemByIndex(0)
+    If pg_rec.GetField("is_closed") = 0 Then
+      btn_close_page.Caption = " Close Page "
+    Else
+      btn_close_page.Caption = "Re-Open Page"
+    End If
+    Set r_list = bulk_rt.GetRecordList(1)             'get page_request and related responses
+    If r_count = 0 and r_list.count = 0 Then
+      r_count = r_list.count
+    Else
+      cobj_LOR_page_response.fill r_list              'fill CLB with response records
+    End If
+    btn_close_page.Enabled = True
+  End If
+End Sub
+
+Sub btn_close_page_Click()
+  Dim pg_list As List                   'list of selected page record
+  Dim pg_rec  As Record                 'selected page record
+  Dim vw_rec  As Record                 'selected view record
+  Dim bulk_rt As New BulkRetrieve       'retrieve area for page record
+  Dim bulk_sv As New BulkSave           'save area for changed page record
+  Dim lor_list As List                  'list of selected page record
+  Dim idx_list As List                  'list of indexes of selected page records
+  Dim sel_idx  As Integer               'index of selected view record
+
+  Set lor_list = cobj_LOR_page_request.contents       'get list of view records
+  Set idx_list = CLB_Page_Request.SelectedIndexes     'get selected record list
+  sel_idx = idx_list.ItemByIndex(0)                   'get selected record index
+
+  If CLB_Page_Request.GetSelected(vw_rec) Then
+    bulk_rt.SimpleQuery 0, "page_request"             'retrieve selected page record
+    bulk_rt.AppendFilter 0, "objid", cbEqual, vw_rec.GetField("page_objid")
+    bulk_rt.RetrieveRecords
+    Set pg_list = bulk_rt.GetRecordList(0)
+    Set pg_rec = pg_list.ItemByIndex(0)
+
+    bulk_sv.UpdateRecord pg_rec
+    If pg_rec.GetField("is_closed") = 0 Then          'toggle closed status
+      pg_rec.SetField "is_closed", 1
+      vw_rec.SetField "page_is_closed", 1
+      btn_close_page.Caption = "Re-Open Page"
+    Else
+      pg_rec.SetField "is_closed", 0
+      vw_rec.SetField "page_is_closed", 0
+      btn_close_page.Caption = "Close Page"
+    End If
+    bulk_sv.ChangeRecord pg_rec                       'save change to database
+    bulk_sv.Save
+
+    lor_list.ReplaceByIndex sel_idx, vw_rec           'replace updated view record in list
+    cobj_LOR_page_request.fill lor_list               'Fill CLB with list of view_pages records
+  End If
+End Sub
+
+Sub load_emp_by_objid(emp_objid As Long)
+  Dim bulk_rt  As New BulkRetrieve      'retrieve area for employee record
+  Dim rt_list  As List                  'list for employee records
+  Dim emp_rec  As Record                'record for employee items
+
+  bulk_rt.SimpleQuery 0, "employee"     'use parameters to get employee record
+  bulk_rt.AppendFilter 0, "objid", cbEqual, emp_objid
+  bulk_rt.RetrieveRecords
+
+  Set rt_list = bulk_rt.GetRecordList(0)
+  If rt_list.count > 0 Then             'set filter controls to reflect passed information
+    Set emp_rec = rt_list.ItemByIndex(0)
+    txt_first.text = emp_rec.GetField("first_name")
+    txt_last.text  = emp_rec.GetField("last_name")
+  End If
+End Sub
+
+Sub load_case_by_objid(case_objid As Long)
+  Dim bulk_rt  As New BulkRetrieve      'retrieve area for case/subcase record
+  Dim rt_list  As List                  'list for case/subcase records
+  Dim case_rec  As Record               'record for case/subcase items
+
+  If pass_focus_type = "case" Then      'use parameters to get case/subcase record
+    bulk_rt.SimpleQuery 0, "case"
+  Else
+    bulk_rt.SimpleQuery 0, "subcase"
+  End If
+  bulk_rt.AppendFilter 0, "objid", cbEqual, case_objid
+  bulk_rt.RetrieveRecords
+
+  Set rt_list = bulk_rt.GetRecordList(0)
+  If rt_list.count > 0 Then             'set filter controls to reflect passed information
+    Set case_rec = rt_list.ItemByIndex(0)
+    txt_case.text = case_rec.GetField("id_number")
+    If pass_focus_type = "case" Then
+      opt_case.value = 1
+    Else
+      opt_subcase.value = 1
+    End If
+  End If
+End Sub
+
+'If form is loaded through an API, then the parameters will be passed in the "info" string
+Sub Message(ByVal num As Long, ByVal info As String)
+  Dim pos1     As Integer               'parsing variables
+  Dim pos2     As Integer
+  Dim pos3     As Integer
+  Dim pos4     As Integer
+  Dim len1     As Integer
+  Dim str1     As String
+  Dim row_index As Integer              'list item index
+  Dim row_list  As List                 'list of displayed page records
+  Dim loopvar   As Integer              'loop var
+  Dim vw_rec  As Record                 'selected view record
+
+' Info is defined as...
+' strMessage = strTypeFocus & "|" & strObjidFocus & "|" & strObjidEmp & "|" & _
+'              strMaxAge & "|" & strShowClosed   'build message string
+
+  Select Case num
+    Case cbCloseMessage
+      Me.Close
+    Case cbFirstMessage + 1
+      len1 = Len(info)
+      If len1 > 0 Then
+        pos1 = InStr(info, "|")         'case or subcase indicator
+        pass_focus_type = Mid(info,1,pos1 - 1)
+        pos1 = pos1 + 1
+
+        pos2 = InStr(pos1, info, "|")   'case or subcase objid
+        pass_focus_objid = CLng(Mid(info,pos1,pos2 - pos1))
+        pos2 = pos2 + 1
+
+        pos3 = InStr(pos2, info, "|")   'employee objid
+        pass_emp_objid = CLng(Mid(info,pos2,pos3 - pos2))
+        pos3 = pos3 + 1
+
+        pos4 = InStr(pos3, info, "|")   'oldest page in elapsed seconds
+        pass_max_age = CLng(Mid(info,pos3,pos4 - pos3))
+        pos4 = pos4 + 1
+
+        str1 = Mid(info,pos4,(len1 + 1) - pos4)
+        If str1 = "False" Then          'show open or all pages
+          pass_show_closed = False
+          chk_closed.Value = 0
+        Else
+          pass_show_closed = True
+          chk_closed.Value = 1
+        End If
+
+        If pass_focus_objid > 0 and InStr(pass_focus_type,"case") > 0 Then
+          load_case_by_objid(pass_focus_objid)        'load case/subcase filter information
+        End If
+
+        If pass_emp_objid > 0 Then
+          load_emp_by_objid(pass_emp_objid)           'load employee filter information
+        End If
+
+        If pass_max_age <> 0 Then                     'load start date filter information
+          txt_start_date.text = DateAdd("s", pass_max_age * -1, Now())
+        End If
+        btn_list.value = 1
+      End If
+    Case cbFirstMessage + 2
+      App.msgbox "message cbFirstMessage + 2 received"
+      Set row_list = CLB_Page_Request.GetList()
+      row_index = -1
+      For loopvar = 0 to row_list.count - 1
+        Set vw_rec = row_list.ItemByIndex(loopvar)
+        If vw_rec.GetField("page_objid") = CLng(info) Then
+          row_index = loopvar
+        End If
+      Next loopvar
+      If row_index > -1 Then
+        CLB_Page_Request.SetSelected row_index
+      End If
+    Case Else
+      Me.DoDefault
+  End Select
+End Sub

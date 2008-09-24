@@ -1,0 +1,87 @@
+OBJECT  TYPE="fc_list_hdr", NAME=list_ASCDSC
+  UNIQUE_FIELD = title
+  FIELDS
+   title ="AscDesc";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "lev_ASCDSC" REL=hdr2fc_list_level;
+  END_RELATIONS
+END_OBJECT  NAME=list_ASCDSC
+
+OBJECT  TYPE="fc_list_level", NAME=lev_ASCDSC
+  FIELDS
+  END_FIELDS
+END_OBJECT  NAME=lev_ASCDSC
+
+OBJECT  TYPE="fc_list_elm", NAME=elm_ASCDSC1
+  UNIQUE_FIELD=rank
+  UNIQUE_RELATION = elm2fc_list_level
+  FIELDS
+   rank=0;
+   state=1;
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "lev_ASCDSC" REL = elm2fc_list_level;
+  END_RELATIONS
+END_OBJECT  NAME=elm_ASCDSC1
+
+OBJECT  TYPE="fc_list_elm", NAME=elm_ASCDSC2
+  UNIQUE_FIELD=rank
+  UNIQUE_RELATION = elm2fc_list_level
+  FIELDS
+   rank=1;
+   state=0;
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "lev_ASCDSC" REL = elm2fc_list_level;
+  END_RELATIONS
+END_OBJECT  NAME=elm_ASCDSC2
+
+OBJECT  TYPE="fc_list_locelm", NAME=locelm_ASCDSC1
+  UNIQUE_FIELD=locale
+  UNIQUE_RELATION = locelm2fc_list_elm
+  FIELDS
+   title="Ascending";
+   locale="EN_US";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "elm_ASCDSC1" REL = locelm2fc_list_elm;
+  END_RELATIONS
+END_OBJECT  NAME=locelm_ASCDSC1
+
+OBJECT  TYPE="fc_list_locelm", NAME=locelm_ASCDSC2
+  UNIQUE_FIELD=locale
+  UNIQUE_RELATION = locelm2fc_list_elm
+  FIELDS
+   title="FR_FR - Ascending";
+   locale="FR_FR";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "elm_ASCDSC1" REL = locelm2fc_list_elm;
+  END_RELATIONS
+END_OBJECT  NAME=locelm_ASCDSC2
+
+OBJECT  TYPE="fc_list_locelm", NAME=locelm_ASCDSC3
+  UNIQUE_FIELD=locale
+  UNIQUE_RELATION = locelm2fc_list_elm
+  FIELDS
+   title="Descending";
+   locale="EN_US";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "elm_ASCDSC2" REL = locelm2fc_list_elm;
+  END_RELATIONS
+END_OBJECT  NAME=locelm_ASCDSC3
+
+OBJECT  TYPE="fc_list_locelm", NAME=locelm_ASCDSC4
+  UNIQUE_FIELD=locale
+  UNIQUE_RELATION = locelm2fc_list_elm
+  FIELDS
+   title="FR_FR - Descending";
+   locale="FR_FR";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "elm_ASCDSC2" REL = locelm2fc_list_elm;
+  END_RELATIONS
+END_OBJECT  NAME=locelm_ASCDSC4
+

@@ -1,0 +1,467 @@
+/******************************************************************************/
+/* Import File for Product Configuration                                      */
+/*                                                                            */
+/* Copyright (C) 1999 First Choice Software, Inc.        All Rights Reserved  */
+/******************************************************************************/
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_USE_NOTIFY_FOCUS_TAG
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Use_NOTIFY_Focus_Tag";
+   i_value =1;
+   description ="Should we allow focus tags in business rule notifications?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_USE_NOTIFY_FOCUS_TAG
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_WARN40
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_WARN40";
+   i_value =1;
+   description ="Should we warn the user when they type 40 characters in the ad-hoc paging form?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_WARN40
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_WARN80
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_WARN80";
+   i_value =1;
+   description ="Should we warn the user when they type 80 characters in the ad-hoc paging form?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_WARN80
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_WARN120
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_WARN120";
+   i_value =1;
+   description ="Should we warn the user when they type 120 characters in the ad-hoc paging form?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_WARN120
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_WARN240
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_WARN240";
+   i_value =1;
+   description ="Should we warn the user when they type 240 characters in the ad-hoc paging form?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_WARN240
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Track_API_Request
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_TRACK_API_REQ";
+   i_value =1;
+   description ="Should we track the page requests made through the API?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Track_API_Request
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Create_API_Request_Event
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Create_API_Request_Event";
+   i_value =1;
+   description ="Should we create time bombs for page requests made through the API?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Create_API_Request_Event
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Create_API_Request_Focus_act_Entry
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Create_API_Request_Focus_act_Entry";
+   i_value =1;
+   description ="Should we create focus object activity entry for page requests made through the API?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Create_API_Request_Focus_act_Entry
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Track_NOTIFY_Request
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Track_NOTIFY_Request";
+   i_value =1;
+   description ="Should we keep or delete page requests for NOTIFY request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Track_NOTIFY_Request
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Response_Filter
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Response_Filter";
+   str_value ="";
+   description ="Filter specification for pg response codes";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Response_Filter
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Ignore_Filter
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Ignore_Filter";
+   str_value ="H1 H2 P1 P2 BT B2 Z2 PT I1 I2 Y1";
+   description ="Filter specification for Ignore codes";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Ignore_Filter
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Track_API_Response
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Track_API_Response";
+   i_value =1;
+   description ="Should we create page response for response to API request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Track_API_Response
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Create_API_Response_Event
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Create_API_Response_Event";
+   i_value =1;
+   description ="Should we create time bomb for response to API request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Create_API_Response_Event
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Create_API_Response_Focus_Act_Entry
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Create_API_Response_Focus_Act_Entry";
+   i_value =1;
+   description ="Should we create focus activity entry for response to API request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Create_API_Response_Focus_Act_Entry
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Track_NOTIFY_Response
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Track_NOTIFY_Response";
+   i_value =1;
+   description ="Should we create page response for response to NOTIFY request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Track_NOTIFY_Response
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Create_NOTIFY_Response_Focus_Act_Entry
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Create_NOTIFY_Response_Focus_Act_Entry";
+   i_value =1;
+   description ="Should we create focus activity entry for response to NOTIFY request?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Create_NOTIFY_Response_Focus_Act_Entry
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Max_Request
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Max_Request";
+   i_value =1;
+   description ="How many request files get processed before moving on?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Max_Request
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Sleep
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Sleep";
+   f_value =1000000.0;
+   description ="How many milliseconds to sleep since zero requests or responses were processed?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Sleep
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Max_Response
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Max_Response";
+   i_value =1;
+   description ="How many pg Serial response files get processed before moving on?";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Max_Response
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Customer_Name
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Customer_Name";
+   str_value ="";
+   description ="Per-database pg provided customer name";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Customer_Name
+
+OBJECT  TYPE="config_itm", NAME=config_itm_pg_Customer_ID
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="pg_Customer_ID";
+   str_value ="";
+   description ="Per-database pg provided customer name";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_pg_Customer_ID
+
+OBJECT  TYPE="config_itm", NAME=config_itm_LC_ALL
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="LC_ALL";
+   str_value ="EN_US";
+   description ="Per-client environment variable for internationalization";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_LC_ALL
+
+OBJECT  TYPE="config_itm", NAME=config_itm_LC_STRING
+  UNIQUE_FIELD="name"
+  FIELDS
+   name ="LC_STRING";
+   str_value ="EN_US";
+   description ="Per-client environment variable for internationalization";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=config_itm_LC_STRING
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_req_objid
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3550;
+   prop_name ="Page Request Objid";
+   path_name ="objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_req_objid
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_req_message
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3550;
+   prop_name ="Page Request Message";
+   path_name ="message";
+   val_type=0;
+   max_len=2048;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_req_message
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_req_device_num
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3550;
+   prop_name ="Page Request Device Number";
+   path_name ="device_num";
+   val_type=0;
+   max_len=40;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_req_device_num
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_resp_objid
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3551;
+   prop_name ="Page Response Objid";
+   path_name ="objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_resp_objid
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_resp_to_request
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3551;
+   prop_name ="Page Response's Related Request";
+   path_name ="page_response2page_request:objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_resp_to_request
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_resp_to_request_to_case
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3551;
+   prop_name ="Page Response's Related Case";
+   path_name ="page_response2page_request:page_request2case:objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_resp_to_request_to_case
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_resp_to_request_to_subcase
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3551;
+   prop_name ="Page Response's Related Subcase";
+   path_name ="page_response2page_request:page_request2subcase:objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_resp_to_request_to_subcase
+
+OBJECT  TYPE="prop_name", NAME=prop_name_pg_resp_to_request_to_empl
+ UNIQUE_FIELD = obj_type , prop_name
+  FIELDS
+   obj_type=3551;
+   prop_name ="Page Response's Related Employee";
+   path_name ="page_response2page_request:page_request2empl:objid";
+   val_type=0;
+   max_len=10;
+   extra_info ="";
+   subtype=0;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=prop_name_pg_resp_to_request_to_empl
+
+REFERENCE TYPE = "gbst_lst", NAME = "Activity List"
+ UNIQUE_FIELD = title 
+  FIELDS
+   title = "Activity Name";
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_REFERENCE NAME= "Activity List"
+
+OBJECT TYPE = "gbst_elm", NAME = "Page Request"
+ UNIQUE_FIELD = title, rank 
+ UNIQUE_RELATION = gbst_elm2gbst_lst
+  FIELDS
+   title = "Page Request";
+   rank = 90220;
+   description = "Custom activity name entry. For page requests.";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "Activity List" REL = gbst_elm2gbst_lst;
+  END_RELATIONS
+END_OBJECT NAME = "Page Request"
+
+OBJECT TYPE = "gbst_elm", NAME = "Page Response"
+ UNIQUE_FIELD = title, rank 
+ UNIQUE_RELATION = gbst_elm2gbst_lst
+  FIELDS
+   title = "Page Response";
+   rank = 90221;
+   description = "Custom activity name entry. For page responses.";
+  END_FIELDS
+  RELATIONS
+   TO_NAME = "Activity List" REL = gbst_elm2gbst_lst;
+  END_RELATIONS
+END_OBJECT NAME = "Page Response"
+
+/******************************************************************************/
+/* Import File for Product Configuration                                      */
+/*                                                                            */
+/* Copyright (C) 1999 First Choice Software, Inc.        All Rights Reserved  */
+/******************************************************************************/
+OBJECT  TYPE="fc_locale", NAME=fc_locale_default
+  UNIQUE_FIELD=locale_name
+  FIELDS
+   locale_name ="EN_US";
+   abday ="Sun|Mon|Tue|Wed|Thu|Fri|Sat";
+   day ="Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday";
+   abmon ="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec";
+   mon ="January|February|March|April|May|June|July|August|September|October|November|December";
+   d_t_fmt ="%a %b %d %H:%M:%S %Z %Y";
+   d_fmt ="%M/%D/%Y";
+   t_fmt ="%H:%M:%S";
+   am_pm ="AM|PM";
+   t_fmt_ampm ="%I:%M:%S %p";
+   upper ="A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z";
+   lower ="a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z";
+   space ="	|
+||| ";
+   cntrl ="||	|
+|||";
+   punct ="!|\"|#|$|%|&|'|(|)|*|+|,|-|.|/|:|;|<|=|>|?|@|[|\\|]|^|_|`|{|||}|~";
+   digit ="0|1|2|3|4|5|6|7|8|9";
+   xdigit ="0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|a|b|c|d|e|f";
+   blank =" |	";
+   toupper ="a,A|b,B|c,C|d,D|e,E|f,F|g,G|h,H|i,I|j,J|k,K|l,L|m,M|n,N|o,O|p,P|q,Q|r,R|s,S|t,T|u,U|v,V|w,W|x,X|y,Y|z,Z";
+   tolower ="A,a|B,b|C,c|D,d|E,e|F,f|G,g|H,h|I,i|J,j|K,k|L,l|M,m|N,n|O,o|P,p|Q,q|R,r|S,s|T,t|U,u|V,v|W,w|X,x|Y,y|Z,z";
+   yesexpr ="y|Y|yes|YES|Yes|1|+";
+   noexpr ="n|N|no|NO|No|0|-";
+   int_curr_symbol ="USD";
+   currency_symbol ="$";
+   mon_decimal_point =".";
+   mon_thousands_sep =",";
+   mon_grouping=3;
+   positive_sign ="";
+   negative_sign ="-";
+   int_frac_digits=2;
+   frac_digits=2;
+   p_cs_precedes=1;
+   p_sep_by_space=0;
+   n_cs_precedes=1;
+   n_sep_by_space=0;
+   p_sign_posn=2;
+   n_sign_posn=2;
+   decimal_point =".";
+   thousands_sep =",";
+   grouping=3;
+  END_FIELDS
+  RELATIONS
+  END_RELATIONS
+END_OBJECT  NAME=fc_locale_default
