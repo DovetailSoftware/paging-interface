@@ -1,9 +1,0 @@
-SCC = This is a Source Code Control file
-
-[pager_clerk.dsp]
-SCC_Aux_Path = "\\freddy\vss_db\"
-SCC_Project_Name = "$/fchoice/product/paging/pager", RYGAAAAA
-
-[pager_clerk.dsw]
-SCC_Aux_Path = "\\freddy\vss_db\"
-SCC_Project_Name = "$/fchoice/product/paging/pager", RYGAAAAA
